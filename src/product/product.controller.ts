@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body } from '@nestjs/common';
+import { Controller, Get, Post, Body, Delete } from '@nestjs/common';
 import { ProductService } from './product.service';
 
 @Controller('products')
@@ -13,5 +13,10 @@ export class ProductController {
   @Post()
   create(@Body() body) {
     return this.productService.create(body);
+  }
+
+  @Delete('cache')
+  forceInvalidateCache() {
+    return this.productService.forceInvalidateCache();
   }
 }

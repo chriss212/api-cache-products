@@ -5,7 +5,10 @@ import { ProductService } from './product.service';
 import { ProductController } from './product.controller';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Product])],
+  imports: [
+    TypeOrmModule.forFeature([Product]),
+    // CacheModule is now global, do not import here
+  ],
   providers: [ProductService],
   controllers: [ProductController],
 })

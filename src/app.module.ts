@@ -1,10 +1,9 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { Product } from './product/product.entity';
+import { ProductModule } from './product/product.module';
 import { CacheModule } from '@nestjs/cache-manager';
-import { CacheConfigService } from './api-cache-error2-src/cache/cache.service';
-import { ProductModule } from './api-cache-error2-src/product/product.module';
+import { CacheConfigService } from './cache/cache.service';
 
 @Module({
   imports: [
@@ -15,15 +14,14 @@ import { ProductModule } from './api-cache-error2-src/product/product.module';
       username: 'postgres',
       password: '',
       database: 'products_db',
+      entities: [Product],
       synchronize: true,
-      autoLoadEntities: true,
     }),
     CacheModule.registerAsync({
+      isGlobal: true, // Make cache global
       useClass: CacheConfigService,
-      isGlobal: true,
     }),
-    ProductModule
+    ProductModule,
   ],
-  providers: [CacheConfigService],
 })
 export class AppModule {}
