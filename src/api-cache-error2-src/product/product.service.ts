@@ -27,4 +27,9 @@ export class ProductService {
     await this.cacheManager.set(cacheKey, data, 30);
     return data;
   }
+
+  async create(data: Partial<Product>) {
+    const newProduct = this.productRepo.create(data);
+    return this.productRepo.save(newProduct);
+  }
 }
